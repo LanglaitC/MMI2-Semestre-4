@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbarou</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-indigo.min.css">
+    <link rel="stylesheet" href="css/map-style.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="spinner" class="">
+      <div class="spinner-card mdl-card mdl-shadow--2dp">
+        <div class="mdl-spinner mdl-js-spinner is-active"></div><br>
+        <p>Nous sommes en train de vous localiser...</p>
+      </div>
+    </div>
+    <div class="map-content">
+      <a href="order.html" class="button mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        Je suis dans le bar !
+      </a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+    	var action = "map";
+    </script>
+    <script src="scripts/map.js" charset="utf-8">
+    </script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHNap7g-qUjdlhYkWWLVpIErNkNVVVsUo&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>

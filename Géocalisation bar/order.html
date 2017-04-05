@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-indigo.min.css">
+  <link rel="stylesheet" href="css/order-style.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <title>Commande</title>
+</head>
+<body>
+    <div id="spinner" style="display: flex">
+	    <div>
+	    	<div class="mdl-spinner mdl-js-spinner is-active"></div>
+			<p id="localisation_message">Nous sommes en train de vous localiser</p>
+	    </div>
+    </div>
+  <div id="global" class="layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100" style="display: none">
+    <div class="ribbon"></div>
+      <main class="main mdl-layout__content">
+        <div class="container mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+          <div id="firstForm" class="content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+            <h1>Bienvenue à <span id="bar_title"></span></h1>
+            <p>Vous êtes sur l'interface qui permet de commmander rapidement et simplament dans le bar où vous vous trouvez.</p>
+            <h6>Saisissez le numéro de votre table :</h6>
+            <form action="#" id="order_form">
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample2">
+                <label class="mdl-textfield__label" for="sample2">numéro</label>
+                <span class="mdl-textfield__error">Input is not a number!</span>
+              </div>
+                <input id="next_order" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Suivant">
+            </form>
+          </div>
+          <div id="secondForm" class="content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+            <h3>Saisissez votre commande :</h3>
+            <form action="#">
+              <div id="listBiere" class="mdl-textfield mdl-js-textfield">
+                <input id="numtable" type="hidden" name="numtable">
+              </div>
+            </form>
+            <button id="next_order" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">commander</button>
+          </div>
+        </div>
+      </main>
+    </div>
+    <div id="map" style="display: none"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script>
+
+      $( "#next_order" ).prop( "disabled", true );
+      $( "#sample2" ).keyup(function() {
+        val = $("#sample2").val();
+        regex = /[0-9]|\./;
+        if((val != '') && (val.match(regex))){
+          $( "#next_order" ).prop( "disabled", false );
+        }
+        else{
+            $( "#next_order" ).prop( "disabled", true );
+        }
+      });
+	  var action = "order";
+    </script>
+    <script src="scripts/map.js" charset="utf-8">
+    </script>
+    <script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHNap7g-qUjdlhYkWWLVpIErNkNVVVsUo&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>

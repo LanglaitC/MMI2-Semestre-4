@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+
+<style type="text/css">
+table.TicTacToe { margin:20px auto; border:3px double black; border-collapse:collapse; }
+table.TicTacToe td { width:100px; height:100px; border:1px solid black; }
+table.TicTacToe td.vide { background:white; }
+table.TicTacToe td.croix { background:url('croix.png') no-repeat center; }
+table.TicTacToe td.cercle { background:url('cercle.png') no-repeat center; }
+table.TicTacToe td.gras { border:5px solid red; }
+</style>
+
+<!-- <table>
+  <tr><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td></tr>
+  <tr><td></td><td></td><td></td></tr>
+</table> -->
+
+<script type="text/javascript">
+function Stack() {
+	this.elements = new Array();
+	this.height = 0;
+}
+
+Stack.prototype.isEmpty = function() {
+	return (this.height==0);
+}
+
+Stack.prototype.head = function() {
+	if (!this.isEmpty()) return this.elements[this.height-1];
+}
+
+Stack.prototype.push = function(value) {
+	this.elements[this.height] = value;
+	this.height++;
+}
+
+Stack.prototype.pop = function() {
+	this.height--;
+}
+
+Stack.prototype.random = function() {
+  return this.elements[Math.floor(Math.random()* this.height)];
+}
+
+Stack.prototype.print = function() {
+  var chaine = ""
+  for(var i = 0; i <= this.height;  i++){
+    chaine += this.elements[i];
+  }
+  return "hauteur =" + this.height + "pile = "+ chaine;
+}
+
+Stack.prototype.empty = function() {
+  this.height = 0
+}
+
+function TicTacToe() {
+	this.data = new Array(9);
+	this.stack = new Stack();
+	for (var  i=0; i<9; i++) this.data[i] = 0;
+	/* EXO4 création de la table */
+  var tableau = document.createElement("table");
+  tableau.setAttribute("class", "TicTacToe");
+  for(var i =0; i < 3; i++){
+    var tr = document.createElement("tr");
+    for(var j=0; j< 3; j++){
+      var td= document.createElement("td");
+      td.setAttribute("id", "case"+i+"-"+j);
+      td.setAttribute("class", "vide");
+      td.innerHTML = '<input type="button" value="jouer" onclick="play('+i+','+j+')">)';
+      tr.appendChild(td);
+    }
+    tableau.appendChild(tr);
+  }
+  document.body.appendChild(tableau)
+}
+
+TicTacToe.prototype.play = function(i,j,player) {
+  this.data[3*i+j] = player;
+  var lol = document.getElementById("case"+i+"-"+j);
+  if(player == 1){
+    lol.setAttribute("class", "croix");
+  } else {
+    lol.setAttribute("class", "cercle");
+  }
+  lol.innerHTML = "";
+}
+
+TicTacToe.prototype.testRow = function(player,i) {
+  for (var j=0;j < 3; j++){
+    if (this.data[3*i+j] != player){
+          return false;
+    }
+  }
+  return true;
+}
+
+TicTacToe.prototype.highlightRow = function(i) {
+  for (var j=0; j <3; j++){
+      var hey = document.getElementById("case"+i+"-"+j);
+      var you = hey.getAttribute("class");
+      hey.setAttribute("class", you+ " gras");
+  }
+}
+
+TicTacToe.prototype.searchWinRow = function(player,i) {
+  num = -1;
+  nbr = 0;
+  for(var j=0; j < 3; j++){
+    console.log(3*i+j);
+    if (this.data[3*i+j] == player){
+      nbr++;
+    } else if(this.data[3*i+j] > 0){
+      return -1;
+    } else {
+     num = 3*i+j;
+    }
+  }
+  if(nbr == 2){
+    return num;
+  } else {
+    return -1;
+  }
+
+}
+
+TicTacToe.prototype.testColumn = function(player,j) {
+
+  for (var i=0;i < 3; i++){
+    if (this.data[3*i+j] != player){
+          return false;
+    }
+  }
+  return true;
+}
+
+TicTacToe.prototype.highlightColumn = function(j) {
+    for (var i=0; i <3; i++){
+        var hey = document.getElementById("case"+i+"-"+j);
+        var you = hey.getAttribute("class");
+        hey.setAttribute("class", you+ " gras");
+    }
+}
+
+TicTacToe.prototype.searchWinColumn = function(player,j) {
+  num = -1;
+  nbr = 0;
+  for(var i=0; i < 3; i++){
+    if (this.data[3*i+j] == player){
+      nbr++;
+    } else if(this.data[3*i+j] > 0){
+      return -1;
+    } else {
+     num = 3*i+j;
+    }
+  }
+  if(nbr == 2){
+    return num;
+  } else {
+    return -1;
+  }
+}
+
+TicTacToe.prototype.testDiagonal = function(player) {
+  for (var i=0; i <3; i++){
+    if(this.data[(3*i) +i] !=player){
+      return false;
+    }
+  }
+  return true;
+}
+
+TicTacToe.prototype.highlightDiagonal = function() {
+  for (var i=0; i <3; i++){
+      var hey = document.getElementById("case"+i+"-"+i);
+      var you = hey.getAttribute("class");
+      hey.setAttribute("class", you+ " gras");
+  }
+}
+
+TicTacToe.prototype.searchWinDiagonal = function(player) {
+  num = -1;
+  nbr = 0;
+  for(var i=0; i < 3; i++){
+    if (this.data[(3*i) +i] == player){
+      nbr++;
+    } else if(this.data[(3*i) +i] > 0){
+      return -1;
+    } else {
+     num = (3*i) +i;
+    }
+  }
+  if(nbr == 2){
+    return num;
+  } else {
+    return -1;
+  }
+}
+
+TicTacToe.prototype.testDiagonalInv = function(player) {
+  for (var i=0; i <3; i++){
+    if(this.data[3*(2-i) +i] !=player){
+      return false;
+    }
+  }
+  return true;
+}
+
+TicTacToe.prototype.highlightDiagonalInv = function() {
+  for (var i=0; i < 3; i++){
+      var hey = document.getElementById("case"+(2-i)+"-"+i);
+      var you = hey.getAttribute("class");
+      hey.setAttribute("class", you+ " gras");
+  }
+}
+
+TicTacToe.prototype.searchWinDiagonalInv = function(player) {
+  num = -1;
+  nbr = 0;
+  for(var i=0; i < 3; i++){
+    if (this.data[3*(2-i) +i] == player){
+      nbr++;
+    } else if(this.data[3*(2-i) +i] > 0){
+      return -1;
+    } else {
+     num = 3*(2-i) +i;
+    }
+  }
+  if(nbr == 2){
+    return num;
+  } else {
+    return -1;
+  }
+}
+
+TicTacToe.prototype.hasWon = function(player) {
+  for (var i = 0; i < 3; i++) {
+
+    if(this.testRow(player, i)){
+      this.highlightRow(i);
+      return true;
+    }
+    if(this.testColumn(player, i)){
+      this.highlightColumn(i);
+      return true;
+    }
+    if(this.testDiagonal(player)){
+      this.highlightDiagonal();
+      return true;
+    }
+    if(this.testDiagonalInv(player)){
+      this.highlightDiagonalInv();
+      return true;
+    }
+  }
+}
+
+TicTacToe.prototype.searchPossible = function() {
+  this.stack = new Stack();
+  for(var i = 0; i <= this.data.length; i++){
+    if(this.data[i] == 0){
+      this.stack.push(i);
+    }
+  }
+  return this.stack;
+}
+
+TicTacToe.prototype.searchWin = function(player) {
+  for (var i = 0; i < 3; i++) {
+    if(this.searchWinRow(player, i) != -1){
+      console.log(this.data)
+      return this.searchWinRow(player, i);
+    }
+    if(this.searchWinColumn(player, i) != -1){
+      console.log("column: "+ this.searchWinColumn(player, i))
+      return this.searchWinColumn(player, i);
+    }
+    if(this.searchWinDiagonal(player) != -1){
+      console.log("diagonale: "+ this.searchWinDiagonal())
+      return this.searchWinDiagonal(player);
+    }
+    if(this.searchWinDiagonalInv(player) != -1){
+      console.log("diagonaleInv"+ this.searchWinDiagonalInv())
+      return this.searchWinDiagonalInv(player);
+    }
+
+  }
+  return -1;
+
+}
+
+TicTacToe.prototype.search = function() {
+}
+
+TicTacToe.prototype.searchEmpty = function() {
+}
+
+TicTacToe.prototype.autoPlay = function() {
+  coup = this.searchPossible();
+  if(coup.isEmpty()){
+    console.log("fini");
+  } else{
+    num = coup.random()
+    i =  Math.floor(num/3);
+    j =  num % 3;
+   play(i,j);
+  }
+}
+
+TicTacToe.prototype.autoPlay2 = function(player) {
+  coup = this.searchPossible();
+  if(coup.isEmpty()){
+    console.log("fini");
+  } else if(this.searchWin(3-player) > -1) {
+    num = this.searchWin(3-player);
+    i =  Math.floor(num/3);
+    j =  num % 3;
+    play(i,j);
+  }else{
+    num = coup.random()
+    i =  Math.floor(num/3);
+    j =  num % 3;
+    play(i,j);
+  }
+
+}
+
+TicTacToe.prototype.autoPlay3 = function(player) {
+  coup = this.searchPossible();
+  if(coup.isEmpty()){
+    console.log("fini");
+  } else if(this.searchWin(player) > -1) {
+    num = this.searchWin(player);
+    i =  Math.floor(num/3);
+    j =  num % 3;
+    play(i,j);
+  }else if(this.searchWin(3-player) > -1) {
+      num = this.searchWin(3-player);
+      i =  Math.floor(num/3);
+      j =  num % 3;
+      play(i,j);
+  } else{
+    num = coup.random()
+    i =  Math.floor(num/3);
+    j =  num % 3;
+    play(i,j);
+  }
+
+}
+
+var TicTacToe;
+var currentPlayer=1;
+
+function play(i,j) {
+	TicTacToe.play(i,j,currentPlayer);
+  TicTacToe.hasWon(currentPlayer);
+	if (currentPlayer == 1) {
+		currentPlayer = 2;
+    TicTacToe.autoPlay3(currentPlayer);
+    currentPlayer = 1;
+	}
+}
+
+function init() {
+	TicTacToe = new TicTacToe();
+
+	//EXO5
+	// TicTacToe.play(1,2,1);
+	// TicTacToe.play(0,0,2);
+
+	// EXO7
+	// TicTacToe.highlightRow(1);
+	// TicTacToe.highlightColumn(0);
+	// TicTacToe.highlightDiagonal();
+	// TicTacToe.highlightDiagonalInv();
+}
+var bob = new Stack();
+bob.push(3);
+bob.push(5);
+bob.push(2);
+console.log(bob.print());
+console.log("random : "+bob.random());
+bob.empty();
+console.log(bob.print());
+
+init();
+
+</script>
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+
+.anneau {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  border: 1px solid black;
+  border-radius: 15px;
+  z-index: 10;
+
+}
+
+.tete {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  border: 1px solid black;
+  background-color: black;
+  border-radius: 15px;
+  z-index: 10;
+
+}
+
+.queue {
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  border: 1px solid black;
+  border-radius: 15px;
+  background-color: red;
+  z-index: 10;
+
+}
+
+.sol{
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.roche{
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  border: 1px solid black;
+  background-color: brown;
+}
+
+.pomme{
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  border: 1px solid black;
+  background-color: green;
+}
+
+.border{
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  border: 1px solid black;
+  background-color: black;
+
+}
+
+
+#ajouter {
+  position: absolute;
+  left: 700px;
+  top: 70px;
+}
+
+.text {
+  position: absolute;
+  left: 700px;
+  top: 100px;
+}

@@ -1,0 +1,16 @@
+.control{
+  position: absolute;
+  width: 800px;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  top: 240px;
+  left: 0px;
+
+}
+
+button {
+  width: 90px;
+  height: 50px;
+
+}
